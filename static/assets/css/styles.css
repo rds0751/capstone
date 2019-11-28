@@ -1,0 +1,16 @@
+#promo {
+  text-align: center;
+  padding: 40px;
+  background: url(../../assets/img/blur-close-up-composition-261679.jpg) no-repeat;
+  background-size: cover;
+}
+
+#sub-promo {
+  align-items: center;
+  align-content: center;
+  filter: blur(0px) brightness(84%);
+}
+
+#inputtext {
+}
+
