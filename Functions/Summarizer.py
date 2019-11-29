@@ -8,7 +8,7 @@ import heapq
 #scraped_data = urllib.request.urlopen('https://en.wikipedia.org/wiki/Artificial_intelligence')  
 #article = scraped_data.read()
 #parsed_article = bs.BeautifulSoup(article,'lxml')
-def summ(article):
+def summa(article):
     parsed_article = bs.BeautifulSoup(article,'lxml')
     paragraphs = parsed_article.find_all('p')
     article_text = ""

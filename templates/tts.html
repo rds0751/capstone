@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<h1>Speaker</h1>
+{% if uploaded_file_url == none %}
+        <p>Upload an Image you want to Summarize it</p>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile">
+    <button type="submit">Upload</button>
+  </form>
+{% endif %}
+</div>
+<div class="container">
+  {% if uploaded_file_url %}
+    <p><h1>Text on image is: </h1>
+        <div class="row">{{ im }}</div>
+    </p>
+  {% endif %}
+
+  <p><a href="/">Speech of Other Image</a></p>
+  </div>
+{% endblock %}

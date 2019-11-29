@@ -23,6 +23,7 @@ if len(sys.argv) < 2:
 #imPath = sys.argv[1]
 #img = cv2.imread(args["image"])
 def ImageScan(image):
+	image = cv2.imread(image)
 	def order_points(pts):
 		# initialzie a list of coordinates that will be ordered
 		# such that the first entry in the list is the top-left,
@@ -108,7 +109,7 @@ def ImageScan(image):
 	cnts = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 	cnts = imutils.grab_contours(cnts)
 	cnts = sorted(cnts, key = cv2.contourArea, reverse = True)[:5]
- 	flag=1
+	flag=1
 	# loop over the contours
 	for c in cnts:
 		# approximate the contour
@@ -119,9 +120,9 @@ def ImageScan(image):
 		# can assume that we have found our screen
 		#screenCnt = approx
 		if len(approx) == 4:
-            screenCnt = approx
-            flag=0
-            break
+			screenCnt = approx
+			flag=0
+			break
 	if(flag==0): 
 		# show the contour (outline) of the piece of paper
 		print("STEP 2: Find contours of paper")

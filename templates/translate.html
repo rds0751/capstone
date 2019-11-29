@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<h1>Translator</h1>
+{% if uploaded_file_url == none %}
+        <p>Upload an Image you want to Translatet</p>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile">
+    <select type="text" name="language">
+    <option >Select Language</option>
+    <option value="english">English</option>
+    <option value="hindi">Hindi</option>
+    <option value="punjabi">Punjabi</option>
+    <option value="marathi">Marathi</option>
+  </select>
+    <button type="submit">Upload</button>
+  </form>
+{% endif %}
+</div>
+<div class="container">
+  {% if uploaded_file_url %}
+    <p>Text on image is: 
+    	<div class="row">{{ im }}</div>
+    	<br><br><br><h1>Translated</h1><br><br>
+    	<div class="row">{{ trans }}</div>
+    </p>
+  {% endif %}
+
+  <p><a href="/">Translate Other Image</a></p>
+  </div>
+{% endblock %}

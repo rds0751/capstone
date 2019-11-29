@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<h1>Image Summarizer</h1>
+{% if uploaded_file_url == none %}
+        <p>Upload an Image you want to Summarize it</p>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile">
+    <button type="submit">Upload</button>
+  </form>
+{% endif %}
+</div>
+<div class="container">
+  {% if uploaded_file_url %}
+    <p>Text on image is: 
+        <div class="row">{{ im }}</div>
+        <br><br><br><h1>Summarized</h1><br><br>
+        <div class="row">{{ Summ }}</div>
+    </p>
+  {% endif %}
+
+  <p><a href="/">Read Other Image</a></p>
+  </div>
+{% endblock %}
