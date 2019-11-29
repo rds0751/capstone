@@ -8,49 +8,53 @@ from Functions.TextToSpeech import *
 import os
 
 def upload(request):
-    if request.method == 'POST' and request.FILES['myfile']:
-        myfile = request.FILES['myfile']
-        fs = FileSystemStorage()
-        filename = fs.save(myfile.name, myfile)
-        uploaded_file_path = fs.path(filename)
+    if 'myfile' in request.FILES:
+    	print('if')
+    	myfile = request.FILES['myfile']
+    	fs = FileSystemStorage()
+    	filename = fs.save(myfile.name, myfile)
+    	uploaded_file_path = fs.path(filename)
+    	f=open(uploaded_file_path)
+    	im=ImageScan(uploaded_file_path)
+    	summ = summa(im)
+    	return render(request, 'base.html', {
+            'uploaded_file_url': uploaded_file_path,
+            'im': im,
+            'summ': summ
+        })
+    elif 'tyfile' in request.POST:
+        uploaded_file_path = request.POST['tyfile']
+        mylanguage = request.POST['language']
         f=open(uploaded_file_path)
         im=ImageScan(uploaded_file_path)
+        summ = summa(im)
+        trans = Translate(im,mylanguage)
         return render(request, 'base.html', {
             'uploaded_file_url': uploaded_file_path,
-            'im': im
+            'im': im,
+            'summ': summ,
+            'trans': trans
         })
     return render(request, 'base.html')
 
 def translate(request):
-    if request.method == 'POST' and request.FILES['myfile']:
-        myfile = request.FILES['myfile']
+    if request.method == 'POST':
+        text = request.POST['text']
         mylanguage = request.POST['language']
-        fs = FileSystemStorage()
-        filename = fs.save(myfile.name, myfile)
-        uploaded_file_path = fs.path(filename)
-        f=open(uploaded_file_path)
-        im=ImageScan(uploaded_file_path)
-        trans = Translate(im,mylanguage)
+        trans = Translate(text,mylanguage)
         return render(request, 'translate.html', {
-            'uploaded_file_url': uploaded_file_path,
-            'im': im,
+            'im': text,
             'trans': trans
         })
     return render(request, 'translate.html')
 
 def summ(request):
-    if request.method == 'POST' and request.FILES['myfile']:
-        myfile = request.FILES['myfile']
-        fs = FileSystemStorage()
-        filename = fs.save(myfile.name, myfile)
-        uploaded_file_path = fs.path(filename)
-        f=open(uploaded_file_path)
-        im=ImageScan(uploaded_file_path)
-        summ = summa(im)
-        return render(request, 'summarize.html', {
-            'uploaded_file_url': uploaded_file_path,
-            'im': im,
-            'summ': summ
+    if request.method == 'POST':
+    	text = request.POST['text']
+    	summ = summa(text)
+    	return render(request, 'summarize.html', {
+        	'im': text,
+        	'summ': summ
         })
     return render(request, 'summarize.html')
 

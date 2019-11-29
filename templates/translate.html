@@ -4,31 +4,31 @@
 
 {% block content %}
 <h1>Translator</h1>
-{% if uploaded_file_url == none %}
-        <p>Upload an Image you want to Translatet</p>
+{% if trans == none %}
+        <p>Upload text you want to Translatet</p>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <input type="file" name="myfile">
+    <textarea name="text" rows="20" cols="100"></textarea><br>
     <select type="text" name="language">
     <option >Select Language</option>
     <option value="english">English</option>
     <option value="hindi">Hindi</option>
     <option value="punjabi">Punjabi</option>
     <option value="marathi">Marathi</option>
-  </select>
+  </select><br>
     <button type="submit">Upload</button>
   </form>
 {% endif %}
 </div>
 <div class="container">
-  {% if uploaded_file_url %}
-    <p>Text on image is: 
+  {% if trans %}
+    <p><h1>Text given is:</h1> 
     	<div class="row">{{ im }}</div>
     	<br><br><br><h1>Translated</h1><br><br>
     	<div class="row">{{ trans }}</div>
     </p>
   {% endif %}
 
-  <p><a href="/">Translate Other Image</a></p>
+  <p><a href="/translate">Translate Other Text</a></p>
   </div>
 {% endblock %}

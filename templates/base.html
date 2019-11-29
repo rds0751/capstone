@@ -14,6 +14,43 @@
     <link rel="stylesheet" href="{% static 'assets/css/Custom-File-Upload.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/Footer-Basic.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+    <style type="text/css">
+        /* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+    </style>
 </head>
 
 <body>
@@ -36,7 +73,7 @@
 <h1>Character Recognition</h1>
 {% if uploaded_file_url == none %}
         <p>Upload an Image you want to convert it into text</p>
-  <form method="post" enctype="multipart/form-data">
+  <form method="post" enctype="multipart/form-data" action="/">
     {% csrf_token %}
     <input type="file" name="myfile">
     <button type="submit">Upload</button>
@@ -47,8 +84,54 @@
   {% if uploaded_file_url %}
     <p><h1>Text on image is: </h1>
     	<div class="row">{{ im }}</div>
+        {% if trans %}<h1>Translation</h1>
+        <div class="row">{{ trans }}</div>{% endif %}
     </p>
-    <h1></h1>
+    <br>
+    <div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'translate')">Translate</button>
+  <button class="tablinks" onclick="openCity(event, 'summarize')">Summarize</button>
+  <button class="tablinks" onclick="openCity(event, 'summarize')">Translate the Summary</button>
+</div>
+
+<div id="translate" class="tabcontent">
+  <h3>Translate</h3>
+  <form method="post" enctype="multipart/form-data" action="/">
+    {% csrf_token %}
+    <input type="hidden" value="{{ uploaded_file_url }}" name="tyfile"><br>
+    <select type="text" name="language">
+    <option >Select Language</option>
+    <option value="english">English</option>
+    <option value="hindi">Hindi</option>
+    <option value="punjabi">Punjabi</option>
+    <option value="marathi">Marathi</option>
+  </select><br>
+    <button type="submit">Upload</button>
+  </form>
+</div>
+
+<div id="summarize" class="tabcontent">
+  <h3>Summarize</h3>
+  <p>{{ summ }}</p> 
+</div>
+
+
+<script>
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+   
   {% endif %}
 
 
